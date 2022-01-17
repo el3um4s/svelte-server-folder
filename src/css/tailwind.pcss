@@ -1,0 +1,21 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/** Modify your Tailwind layers etc. here **/
+@layer base {
+  body {
+    @apply font-sans antialiased text-gray-800 bg-gray-200;
+  }
+
+  h1 {
+    @apply text-7xl text-red-600;
+    &:hover {
+      @apply text-red-500;
+    }
+  }
+
+  p {
+    @apply m-2;
+  }
+}
