@@ -167,7 +167,7 @@
     for await (const [name, handle] of dirHandle.entries()) {
       // Display folders as "name/", otherwise just use name
       const suffix = handle.kind === "directory" ? "/" : "";
-      str += `<li><a href="${relativeUrl}${name}">${name}${suffix}</a></li>`;
+      str += `<li><a href="${name}${suffix}">${name}${suffix}</a></li>`;
     }
 
     str += `</ul></body></html>`;
