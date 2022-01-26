@@ -42,7 +42,6 @@
   function onHostStarted(data) {
     hostName = data.hostName;
     swScope = data.scope;
-    console.log(data.clientId);
     clientId = data.clientId;
   }
 </script>

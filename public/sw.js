@@ -1,3 +1,19 @@
+let storeHosts = [];
+
+const storageDelete = (hostName) => {
+  storeHosts = storeHosts.filter(host => host.hostName !== hostName);
+}
+
+const storageGetClientId = (hostName) => {
+  return storeHosts.find(host => host.hostName === hostName);
+}
+
+const storageClear = () => {
+  storeHosts = [];
+}
+
+const storageLength = () => storeHosts.length;
+
 // Install & activate
 self.addEventListener("install", (e) => {
   console.log("[SW] install");
@@ -34,18 +50,26 @@ self.addEventListener("message", (e) => {
   }
 });
 
-let clientIdTemp = null;
+
 
 // Client wants to start hosting
 async function StartHost(e) {
 
   const allClients = await self.clients.matchAll();
-  console.log(allClients);
 
-  const hostName = "host" + (Math.random() * 1000).toFixed(0).padStart(4, "0") + (Math.random() * 1000).toFixed(0).padStart(4, "0");
+  if (allClients.length <= 1) {
+    storageClear();
+  }
+
+  const hostKeys = storageLength();
+  const hostName = `host${hostKeys+1}`;
   const clientId = e.source.id;
-  clientIdTemp = clientId;
 
+  storeHosts.push({
+    hostName,
+    clientId
+  })
+  console.log("storeHosts", storeHosts);
   // Tell client it's now hosting.
   e.source.postMessage({
     type: "start-ok",
@@ -56,7 +80,7 @@ async function StartHost(e) {
 }
 
 async function StopHost(e) {
-  // await storageDelete(e.data.hostName);
+  storageDelete(e.data.hostName);
 }
 
 
@@ -88,11 +112,12 @@ self.addEventListener("fetch", (e) => {
 
 async function HostFetch(hostName, url) {
   // Look up client from the host name.
-  const clientId = clientIdTemp;
-  if (!clientId) return;
+  const clientId = storageGetClientId(hostName);
+  if (!clientId) return HostNotFoundResponse(hostName);
 
-  const client = await self.clients.get(clientId);
-  if (!client) return;
+  console.log("HostFetch", clientId);
+  const client = await self.clients.get(clientId.clientId);
+  if (!client) return ClientNotFoundResponse(hostName);
 
   // Create a MessageChannel for the client to send a reply.
   // Wrap it in a promise so the response can be awaited.
@@ -131,4 +156,33 @@ async function HostFetch(hostName, url) {
   }
 }
 
-// export default null;
+// Error responses
+function HostNotFoundResponse(hostName) {
+  return new Response(`<h1>Host not found</h1><p>The host '<em>${hostName}</em>' does not appear to be running. Make sure you have chosen a folder to serve. Alternatively you might have closed the host's browser tab.</p>`, {
+    status: 404,
+    statusText: "Not Found",
+    headers: {
+      "Content-Type": "text/html"
+    }
+  });
+}
+
+function ClientNotFoundResponse(hostName) {
+  return new Response(`<h1>Client not found</h1><p>A client for the host '<em>${hostName}</em>' does not appear to be running. You might have closed its browser tab.</p>`, {
+    status: 404,
+    statusText: "Not Found",
+    headers: {
+      "Content-Type": "text/html"
+    }
+  });
+}
+
+function FetchFailedResponse(hostName, url) {
+  return new Response(`<h1>File not found</h1><p>The host '<em>${hostName}</em>' was not able to return a file for the path '<em>${url}</em>'. Check the file exists in the folder you chose to serve.`, {
+    status: 404,
+    statusText: "Not Found",
+    headers: {
+      "Content-Type": "text/html"
+    }
+  });
+}
