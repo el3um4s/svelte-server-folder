@@ -7,17 +7,17 @@ self.addEventListener("install", (e) => {
 
   // Skip waiting to ensure files can be served on first run. Also save all files to
   // the offline cache for offline support on install.
-  // e.waitUntil(Promise.all([
-  //     self.skipWaiting(),
-  //     SaveFilesToOfflineCache()
-  // ]));
+  e.waitUntil(Promise.all([
+    self.skipWaiting(),
+    // SaveFilesToOfflineCache()
+  ]));
 });
 
 self.addEventListener("activate", (event) => {
   console.log("[SW] activate");
 
   // On activation, claim all clients so we can start serving files on first run
-  // event.waitUntil(clients.claim());
+  event.waitUntil(clients.claim());
 });
 
 // Listen for messages from clients
@@ -28,9 +28,9 @@ self.addEventListener("message", (e) => {
     case "host-start":
       e.waitUntil(StartHost(e));
       break;
-    // case "host-stop":
-    //     e.waitUntil(StopHost(e));
-    //     break;
+      // case "host-stop":
+      //     e.waitUntil(StopHost(e));
+      //     break;
     default:
       console.warn(`[SW] Unknown message '${e.data.type}'`);
       break;
@@ -99,8 +99,7 @@ async function HostFetch(hostName, url) {
   });
 
   // Post to the client to ask it to provide this file.
-  client.postMessage(
-    {
+  client.postMessage({
       type: "fetch",
       url,
       port: messageChannel.port2,
