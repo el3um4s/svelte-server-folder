@@ -1,6 +1,3 @@
-// joshuatz.com/posts/2021/strongly-typed-service-workers/
-// dev.to/jdedwards3/create-a-service-worker-with-typescript-4kai
-
 // Install & activate
 self.addEventListener("install", (e) => {
   console.log("[SW] install");
@@ -28,9 +25,9 @@ self.addEventListener("message", (e) => {
     case "host-start":
       e.waitUntil(StartHost(e));
       break;
-      // case "host-stop":
-      //     e.waitUntil(StopHost(e));
-      //     break;
+    case "host-stop":
+      e.waitUntil(StopHost(e));
+      break;
     default:
       console.warn(`[SW] Unknown message '${e.data.type}'`);
       break;
@@ -41,7 +38,11 @@ let clientIdTemp = null;
 
 // Client wants to start hosting
 async function StartHost(e) {
-  const hostName = "host";
+
+  const allClients = await self.clients.matchAll();
+  console.log(allClients);
+
+  const hostName = "host" + (Math.random() * 1000).toFixed(0).padStart(4, "0") + (Math.random() * 1000).toFixed(0).padStart(4, "0");
   const clientId = e.source.id;
   clientIdTemp = clientId;
 
@@ -53,6 +54,11 @@ async function StartHost(e) {
     scope: self.registration.scope,
   });
 }
+
+async function StopHost(e) {
+  // await storageDelete(e.data.hostName);
+}
+
 
 // Main fetch event
 self.addEventListener("fetch", (e) => {
@@ -120,8 +126,8 @@ async function HostFetch(hostName, url) {
       },
     });
   } catch (err) {
-    return;
-    // return FetchFailedResponse(hostName, url);
+    // return;
+    return FetchFailedResponse(hostName, url);
   }
 }
 
