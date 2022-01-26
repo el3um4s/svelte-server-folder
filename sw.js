@@ -1,5 +1,18 @@
-// joshuatz.com/posts/2021/strongly-typed-service-workers/
-// dev.to/jdedwards3/create-a-service-worker-with-typescript-4kai
+let storeHosts = [];
+
+const storageDelete = (hostName) => {
+  storeHosts = storeHosts.filter(host => host.hostName !== hostName);
+}
+
+const storageGetClientId = (hostName) => {
+  return storeHosts.find(host => host.hostName === hostName);
+}
+
+const storageClear = () => {
+  storeHosts = [];
+}
+
+const storageLength = () => storeHosts.length;
 
 // Install & activate
 self.addEventListener("install", (e) => {
@@ -28,23 +41,35 @@ self.addEventListener("message", (e) => {
     case "host-start":
       e.waitUntil(StartHost(e));
       break;
-      // case "host-stop":
-      //     e.waitUntil(StopHost(e));
-      //     break;
+    case "host-stop":
+      e.waitUntil(StopHost(e));
+      break;
     default:
       console.warn(`[SW] Unknown message '${e.data.type}'`);
       break;
   }
 });
 
-let clientIdTemp = null;
+
 
 // Client wants to start hosting
 async function StartHost(e) {
-  const hostName = "host";
-  const clientId = e.source.id;
-  clientIdTemp = clientId;
 
+  const allClients = await self.clients.matchAll();
+
+  if (allClients.length <= 1) {
+    storageClear();
+  }
+
+  const hostKeys = storageLength();
+  const hostName = `host${hostKeys+1}`;
+  const clientId = e.source.id;
+
+  storeHosts.push({
+    hostName,
+    clientId
+  })
+  console.log("storeHosts", storeHosts);
   // Tell client it's now hosting.
   e.source.postMessage({
     type: "start-ok",
@@ -53,6 +78,11 @@ async function StartHost(e) {
     scope: self.registration.scope,
   });
 }
+
+async function StopHost(e) {
+  storageDelete(e.data.hostName);
+}
+
 
 // Main fetch event
 self.addEventListener("fetch", (e) => {
@@ -82,11 +112,12 @@ self.addEventListener("fetch", (e) => {
 
 async function HostFetch(hostName, url) {
   // Look up client from the host name.
-  const clientId = clientIdTemp;
-  if (!clientId) return;
+  const clientId = storageGetClientId(hostName);
+  if (!clientId) return HostNotFoundResponse(hostName);
 
-  const client = await self.clients.get(clientId);
-  if (!client) return;
+  console.log("HostFetch", clientId);
+  const client = await self.clients.get(clientId.clientId);
+  if (!client) return ClientNotFoundResponse(hostName);
 
   // Create a MessageChannel for the client to send a reply.
   // Wrap it in a promise so the response can be awaited.
@@ -120,9 +151,38 @@ async function HostFetch(hostName, url) {
       },
     });
   } catch (err) {
-    return;
-    // return FetchFailedResponse(hostName, url);
+    // return;
+    return FetchFailedResponse(hostName, url);
   }
 }
 
-// export default null;
+// Error responses
+function HostNotFoundResponse(hostName) {
+  return new Response(`<h1>Host not found</h1><p>The host '<em>${hostName}</em>' does not appear to be running. Make sure you have chosen a folder to serve. Alternatively you might have closed the host's browser tab.</p>`, {
+    status: 404,
+    statusText: "Not Found",
+    headers: {
+      "Content-Type": "text/html"
+    }
+  });
+}
+
+function ClientNotFoundResponse(hostName) {
+  return new Response(`<h1>Client not found</h1><p>A client for the host '<em>${hostName}</em>' does not appear to be running. You might have closed its browser tab.</p>`, {
+    status: 404,
+    statusText: "Not Found",
+    headers: {
+      "Content-Type": "text/html"
+    }
+  });
+}
+
+function FetchFailedResponse(hostName, url) {
+  return new Response(`<h1>File not found</h1><p>The host '<em>${hostName}</em>' was not able to return a file for the path '<em>${url}</em>'. Check the file exists in the folder you chose to serve.`, {
+    status: 404,
+    statusText: "Not Found",
+    headers: {
+      "Content-Type": "text/html"
+    }
+  });
+}
