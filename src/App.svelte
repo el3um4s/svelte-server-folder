@@ -7,11 +7,14 @@
   import { FolderHandle } from "./sw/folderHandler";
   import { handleFetch } from "./sw/fetchHandler";
 
+  let folderHandle = null;
+  let hostName = "";
+  let swScope = null;
+  let clientId = "";
+
   onMount(async () => {
     await SW.register();
   });
-
-  let folderHandle = null;
 
   window.addEventListener("unload", () => {
     SW.post({
@@ -35,9 +38,6 @@
     }
   });
 
-  let hostName = "";
-  let swScope = null;
-  let clientId = "";
   // SW indicates hosting started OK: get info and display URL
   function onHostStarted(data) {
     hostName = data.hostName;
@@ -47,7 +47,7 @@
 </script>
 
 <main>
-  <p>Version: 0.0.3</p>
+  <p>Version: 0.0.4</p>
 
   <button
     on:click={async () => {

@@ -1,4 +1,7 @@
+import { head, goToUp, h1, li } from "./directoryListeningHelper/elements";
+import { style } from "./directoryListeningHelper/style";
 // For generating a directory listing page for a folder
+
 export const generateDirectoryListing = async (
   dirHandle: FileSystemDirectoryHandle,
   relativeUrl: string
@@ -6,20 +9,25 @@ export const generateDirectoryListing = async (
   // Display folder with / at end
   if (relativeUrl && !relativeUrl.endsWith("/")) relativeUrl += "/";
 
-  let str = `<!DOCTYPE html>
-	<html><head>
-	<meta charset="utf-8">
-	<title>Directory listing for ${relativeUrl || "/"}</title>
-	</head><body>
-	<h1>Directory listing for ${relativeUrl || "/"}</h1><ul>`;
+  let str = `
+<!DOCTYPE html>
+<html>
+${head(relativeUrl)}
 
-  for await (const [name, handle] of dirHandle.entries()) {
-    // Display folders as "name/", otherwise just use name
-    const suffix = handle.kind === "directory" ? "/" : "";
-    str += `<li><a href="${name}${suffix}">${name}${suffix}</a></li>`;
-  }
+<body>
+  <main>
+  ${h1(relativeUrl)}
 
-  str += `</ul></body></html>`;
+  <div class="list">
+  ${goToUp(relativeUrl)}
+  ${await li(dirHandle)}
+  </div>
+  </main>
+</body>
+
+${style}
+
+</html>`;
 
   return new Blob([str], { type: "text/html" });
 };
