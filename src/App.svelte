@@ -47,27 +47,60 @@
 </script>
 
 <main>
-  <p>Version: 0.0.4</p>
+  <section class="folder-handle">
+    <header>
+      <h1>Svelte Serve Folder</h1>
+      <div class="version">Version: 0.0.5</div>
+      <div>
+        Serve a local folder of files in your browser for easy testing without
+        having to run a server.
+      </div>
+    </header>
 
-  <button
-    on:click={async () => {
-      folderHandle = await FolderHandle.init();
-    }}>Load Folder</button
-  >
+    <article>
+      <button
+        on:click={async () => {
+          folderHandle = await FolderHandle.init();
+        }}>Pick Folder</button
+      >
 
-  <div>folderName: {folderHandle?.name}</div>
-  <div>clientID: {clientId}</div>
-  <div><a href="{swScope}{hostName}/">{swScope}{hostName}/</a></div>
+      <div>folderName: {folderHandle?.name}</div>
+      <div>clientID: {clientId}</div>
+      <div>swScope: {swScope}</div>
+      <div>hostName: {hostName}</div>
+      <button
+        on:click={() => {
+          globalThis.open(`${swScope}${hostName}/`, "_blank");
+        }}>Open in new tab</button
+      >
+    </article>
+  </section>
 </main>
 
 <style lang="postcss">
-  a {
-    @apply p-1 rounded-lg;
+  /* main {
+    --background-color: #f5f5f5;
+    --color: #333242;
+    --hover-background-color: #dcb454;
+    --hover-color: #1f6435;
+  } */
+  .folder-handle {
+    @apply w-96 max-w-sm border p-2 rounded;
+    background-color: #fff7ed;
+    --hover-background-color: #dfcdc3;
+    border-color: var(--color);
   }
 
-  a:hover {
-    border-bottom: 2px;
-    background-color: theme("colors.red.600");
-    color: theme("colors.gray.300");
+  header,
+  article {
+    @apply p-2;
+  }
+
+  header {
+    @apply mb-4;
+    border-bottom: 2px solid #dfcdc3;
+  }
+  .version {
+    @apply text-sm;
   }
 </style>

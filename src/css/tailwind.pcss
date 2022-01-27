@@ -2,20 +2,36 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+:root {
+  --background-color: #dfcdc3;
+  --color: #333242;
+  --hover-background-color: #dcb454;
+  --hover-color: #1f6435;
+}
 /** Modify your Tailwind layers etc. here **/
 @layer base {
   body {
-    @apply font-sans antialiased text-gray-800 bg-gray-200;
+    @apply font-sans antialiased grid justify-center items-start box-border bg-[color:var(--background-color)] text-[color:var(--color)];
   }
 
   h1 {
-    @apply text-7xl text-red-600;
-    &:hover {
-      @apply text-red-500;
-    }
+    @apply text-3xl font-semibold;
   }
 
   p {
     @apply m-2;
+  }
+
+  a {
+    @apply p-1 rounded-lg no-underline text-[color:var(--color)];
+  }
+
+  a:hover,
+  button:hover {
+    @apply no-underline bg-[color:var(--hover-background-color)] text-[color:var(--hover-color)];
+  }
+
+  button {
+    @apply border p-2 rounded border-[color:var(--color)];
   }
 }
