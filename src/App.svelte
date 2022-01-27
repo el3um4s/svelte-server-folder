@@ -47,9 +47,16 @@
   }
 
   let showServerInfo = false;
+  let showIframe = false;
+
+  function openInIframe() {
+    showIframe = true;
+  }
+
+  $: gridTemplateColumns = showIframe ? "448px calc(100vw - 480px)" : "auto";
 </script>
 
-<main>
+<main style:grid-template-columns={gridTemplateColumns}>
   <section class="folder-handle">
     <header>
       <h1>Svelte Serve Folder</h1>
@@ -73,6 +80,9 @@
             on:click={() => {
               globalThis.open(`${swScope}${hostName}/`, "_blank");
             }}>Open in new tab</button
+          >
+          <button transition:slide on:click={openInIframe}
+            >Open in iframe</button
           >
         {/if}
       </div>
@@ -101,11 +111,25 @@
       {/if}
     </article>
   </section>
+  {#if showIframe}
+    <div class="iframe">
+      <iframe
+        title={folderHandle?.name}
+        width="100%"
+        height="100%"
+        src={`${swScope}${hostName}/`}
+      />
+    </div>
+  {/if}
 </main>
 
 <style lang="postcss">
+  main {
+    @apply h-full grid items-start gap-2;
+  }
   .folder-handle {
-    @apply w-96 max-w-sm border p-2 rounded drop-shadow-lg;
+    width: 448px;
+    @apply max-w-md border p-2 rounded drop-shadow-lg;
     background-color: #fff7ed;
     --hover-background-color: #dfcdc3;
     border-color: var(--color);
@@ -138,5 +162,12 @@
   .handled > div {
     border-bottom: 1px solid #dfcdc3;
     padding: 4px;
+  }
+
+  .iframe {
+    @apply m-2 border rounded drop-shadow-lg;
+    background-color: #fff7ed;
+    border-color: var(--color);
+    height: calc(100% - 8px);
   }
 </style>
