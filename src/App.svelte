@@ -2,6 +2,7 @@
   import "./css/tailwind.pcss";
 
   import { onMount } from "svelte";
+  import { slide } from "svelte/transition";
 
   import { SW } from "./sw/serviceWorker";
   import { FolderHandle } from "./sw/folderHandler";
@@ -44,13 +45,15 @@
     swScope = data.scope;
     clientId = data.clientId;
   }
+
+  let showServerInfo = false;
 </script>
 
 <main>
   <section class="folder-handle">
     <header>
       <h1>Svelte Serve Folder</h1>
-      <div class="version">Version: 0.0.5</div>
+      <div class="version">Version: 0.0.6</div>
       <div>
         Serve a local folder of files in your browser for easy testing without
         having to run a server.
@@ -58,34 +61,51 @@
     </header>
 
     <article>
-      <button
-        on:click={async () => {
-          folderHandle = await FolderHandle.init();
-        }}>Pick Folder</button
-      >
+      <div class="buttons">
+        <button
+          on:click={async () => {
+            folderHandle = await FolderHandle.init();
+          }}>Pick Folder</button
+        >
+        {#if folderHandle}
+          <button
+            transition:slide
+            on:click={() => {
+              globalThis.open(`${swScope}${hostName}/`, "_blank");
+            }}>Open in new tab</button
+          >
+        {/if}
+      </div>
 
-      <div>folderName: {folderHandle?.name}</div>
-      <div>clientID: {clientId}</div>
-      <div>swScope: {swScope}</div>
-      <div>hostName: {hostName}</div>
-      <button
-        on:click={() => {
-          globalThis.open(`${swScope}${hostName}/`, "_blank");
-        }}>Open in new tab</button
-      >
+      {#if folderHandle}
+        <div class="server-information">
+          <div
+            on:click={() => (showServerInfo = !showServerInfo)}
+            style:cursor="pointer"
+          >
+            Server Information
+          </div>
+          {#if showServerInfo}
+            <div class="handled" transition:slide>
+              <div>folderName</div>
+              <div>{folderHandle?.name}</div>
+              <div>clientID</div>
+              <div>{clientId}</div>
+              <div>swScope</div>
+              <div>{swScope}</div>
+              <div>hostName</div>
+              <div>{hostName}</div>
+            </div>
+          {/if}
+        </div>
+      {/if}
     </article>
   </section>
 </main>
 
 <style lang="postcss">
-  /* main {
-    --background-color: #f5f5f5;
-    --color: #333242;
-    --hover-background-color: #dcb454;
-    --hover-color: #1f6435;
-  } */
   .folder-handle {
-    @apply w-96 max-w-sm border p-2 rounded;
+    @apply w-96 max-w-sm border p-2 rounded drop-shadow-lg;
     background-color: #fff7ed;
     --hover-background-color: #dfcdc3;
     border-color: var(--color);
@@ -102,5 +122,21 @@
   }
   .version {
     @apply text-sm;
+  }
+
+  .server-information {
+    margin: 8px;
+  }
+  .handled {
+    margin-top: 8px;
+    display: grid;
+    grid-template-columns: min-content auto;
+    align-items: normal;
+    justify-items: stretch;
+  }
+
+  .handled > div {
+    border-bottom: 1px solid #dfcdc3;
+    padding: 4px;
   }
 </style>
