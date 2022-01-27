@@ -380,28 +380,47 @@ Ensure the default browser behavior of the `hidden` attribute.
   display: none;
 }
   body {
-  --tw-bg-opacity: 1;
-  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
+  box-sizing: border-box;
+  display: grid;
+  align-items: flex-start;
+  justify-content: center;
+  background-color: var(--background-color);
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --tw-text-opacity: 1;
-  color: rgb(31 41 55 / var(--tw-text-opacity));
+  color: var(--color);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
   h1 {
-  font-size: 4.5rem;
-  line-height: 1;
-  --tw-text-opacity: 1;
-  color: rgb(220 38 38 / var(--tw-text-opacity));
-}
-    h1:hover {
-  --tw-text-opacity: 1;
-  color: rgb(239 68 68 / var(--tw-text-opacity));
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  font-weight: 600;
 }
 
   p {
   margin: 0.5rem;
+}
+
+  a {
+  border-radius: 0.5rem;
+  padding: 0.25rem;
+  color: var(--color);
+  -webkit-text-decoration-line: none;
+          text-decoration-line: none;
+}
+
+  a:hover, button:hover {
+  background-color: var(--hover-background-color);
+  color: var(--hover-color);
+  -webkit-text-decoration-line: none;
+          text-decoration-line: none;
+}
+
+  button {
+  border-radius: 0.25rem;
+  border-width: 1px;
+  border-color: var(--color);
+  padding: 0.5rem;
 }
 
 *, ::before, ::after {
@@ -448,8 +467,44 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-backdrop-saturate:  ;
   --tw-backdrop-sepia:  ;
 }
+.box-border {
+  box-sizing: border-box;
+}
+.grid {
+  display: grid;
+}
+.w-96 {
+  width: 24rem;
+}
+.max-w-sm {
+  max-width: 24rem;
+}
+.items-start {
+  align-items: flex-start;
+}
+.justify-center {
+  justify-content: center;
+}
+.rounded {
+  border-radius: 0.25rem;
+}
+.rounded-lg {
+  border-radius: 0.5rem;
+}
 .border {
   border-width: 1px;
+}
+.border-\[color\:var\(--color\)\] {
+  border-color: var(--color);
+}
+.bg-\[color\:var\(--background-color\)\] {
+  background-color: var(--background-color);
+}
+.bg-\[color\:var\(--hover-background-color\)\] {
+  background-color: var(--hover-background-color);
+}
+.p-2 {
+  padding: 0.5rem;
 }
 .p-1 {
   padding: 0.25rem;
@@ -457,19 +512,31 @@ Ensure the default browser behavior of the `hidden` attribute.
 .font-sans {
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
-.text-7xl {
-  font-size: 4.5rem;
-  line-height: 1;
+.text-3xl {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
 }
-.text-gray-800 {
-  --tw-text-opacity: 1;
-  color: rgb(31 41 55 / var(--tw-text-opacity));
+.text-\[color\:var\(--color\)\] {
+  color: var(--color);
+}
+.text-\[color\:var\(--hover-color\)\] {
+  color: var(--hover-color);
+}
+.no-underline {
+  -webkit-text-decoration-line: none;
+          text-decoration-line: none;
 }
 .antialiased {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+:root {
+  --background-color: #dfcdc3;
+  --color: #333242;
+  --hover-background-color: #dcb454;
+  --hover-color: #1f6435;
+}
 /** Modify your Tailwind layers etc. here **/
 
-a.svelte-f579x2{border-radius:0.5rem;padding:0.25rem}a.svelte-f579x2:hover{border-bottom:2px;background-color:#dc2626;color:#d1d5db}
+.folder-handle.svelte-emn7o0.svelte-emn7o0{width:24rem;max-width:24rem;border-radius:0.25rem;border-width:1px;padding:0.5rem;--tw-drop-shadow:drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);;background-color:#fff7ed;--hover-background-color:#dfcdc3;border-color:var(--color)}header.svelte-emn7o0.svelte-emn7o0, article.svelte-emn7o0.svelte-emn7o0{padding:0.5rem}header.svelte-emn7o0.svelte-emn7o0{margin-bottom:1rem;;border-bottom:2px solid #dfcdc3}.version.svelte-emn7o0.svelte-emn7o0{font-size:0.875rem;line-height:1.25rem}.server-information.svelte-emn7o0.svelte-emn7o0{margin:8px}.handled.svelte-emn7o0.svelte-emn7o0{margin-top:8px;display:grid;grid-template-columns:-webkit-min-content auto;grid-template-columns:min-content auto;align-items:normal;justify-items:stretch}.handled.svelte-emn7o0>div.svelte-emn7o0{border-bottom:1px solid #dfcdc3;padding:4px}
