@@ -11,7 +11,7 @@ export const generateDirectoryListing = async (
 
   let str = `
 <!DOCTYPE html>
-<html>
+<html style="background-color:#DFCDC3;">
 ${head(relativeUrl)}
 
 <body>

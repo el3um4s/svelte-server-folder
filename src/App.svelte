@@ -50,9 +50,12 @@
   let showIframe = false;
 
   function openInIframe() {
-    showIframe = true;
+    showIframe = !showIframe;
   }
 
+  $: labelShowIframe = labelShowIframe = showIframe
+    ? "Close iframe"
+    : "Open in iframe";
   $: gridTemplateColumns = showIframe ? "448px calc(100vw - 480px)" : "auto";
 </script>
 
@@ -72,6 +75,7 @@
         <button
           on:click={async () => {
             folderHandle = await FolderHandle.init();
+            // showIframe = false;
           }}>Pick Folder</button
         >
         {#if folderHandle}
@@ -82,7 +86,7 @@
             }}>Open in new tab</button
           >
           <button transition:slide on:click={openInIframe}
-            >Open in iframe</button
+            >{labelShowIframe}</button
           >
         {/if}
       </div>
@@ -112,7 +116,7 @@
     </article>
   </section>
   {#if showIframe}
-    <div class="iframe">
+    <div class="iframe" transition:slide>
       <iframe
         title={folderHandle?.name}
         width="100%"
@@ -165,7 +169,7 @@
   }
 
   .iframe {
-    @apply m-2 border rounded drop-shadow-lg;
+    @apply border rounded drop-shadow-lg;
     background-color: #fff7ed;
     border-color: var(--color);
     height: calc(100% - 8px);
