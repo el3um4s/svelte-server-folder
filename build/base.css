@@ -1,5 +1,5 @@
 /*
-! tailwindcss v3.0.16 | MIT License | https://tailwindcss.com
+! tailwindcss v3.0.17 | MIT License | https://tailwindcss.com
 *//*
 1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
 2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)
@@ -468,9 +468,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-backdrop-saturate:  ;
   --tw-backdrop-sepia:  ;
 }
-.m-2 {
-  margin: 0.5rem;
-}
 .box-border {
   box-sizing: border-box;
 }
@@ -543,4 +540,4 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 /** Modify your Tailwind layers etc. here **/
 
-main.svelte-7odgrc.svelte-7odgrc{display:grid;height:100%;align-items:flex-start;gap:0.5rem}.folder-handle.svelte-7odgrc.svelte-7odgrc{width:448px;max-width:28rem;border-radius:0.25rem;border-width:1px;padding:0.5rem;--tw-drop-shadow:drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);;background-color:#fff7ed;--hover-background-color:#dfcdc3;border-color:var(--color)}header.svelte-7odgrc.svelte-7odgrc, article.svelte-7odgrc.svelte-7odgrc{padding:0.5rem}header.svelte-7odgrc.svelte-7odgrc{margin-bottom:1rem;;border-bottom:2px solid #dfcdc3}.version.svelte-7odgrc.svelte-7odgrc{font-size:0.875rem;line-height:1.25rem}.server-information.svelte-7odgrc.svelte-7odgrc{margin:8px}.handled.svelte-7odgrc.svelte-7odgrc{margin-top:8px;display:grid;grid-template-columns:-webkit-min-content auto;grid-template-columns:min-content auto;align-items:normal;justify-items:stretch}.handled.svelte-7odgrc>div.svelte-7odgrc{border-bottom:1px solid #dfcdc3;padding:4px}.iframe.svelte-7odgrc.svelte-7odgrc{margin:0.5rem;border-radius:0.25rem;border-width:1px;--tw-drop-shadow:drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);;background-color:#fff7ed;border-color:var(--color);height:calc(100% - 8px)}
+main.svelte-c4j8o8.svelte-c4j8o8{display:grid;height:100%;align-items:flex-start;gap:0.5rem}.folder-handle.svelte-c4j8o8.svelte-c4j8o8{width:448px;max-width:28rem;border-radius:0.25rem;border-width:1px;padding:0.5rem;--tw-drop-shadow:drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);;background-color:#fff7ed;--hover-background-color:#dfcdc3;border-color:var(--color)}header.svelte-c4j8o8.svelte-c4j8o8, article.svelte-c4j8o8.svelte-c4j8o8{padding:0.5rem}header.svelte-c4j8o8.svelte-c4j8o8{margin-bottom:1rem;;border-bottom:2px solid #dfcdc3}.version.svelte-c4j8o8.svelte-c4j8o8{font-size:0.875rem;line-height:1.25rem}.server-information.svelte-c4j8o8.svelte-c4j8o8{margin:8px}.handled.svelte-c4j8o8.svelte-c4j8o8{margin-top:8px;display:grid;grid-template-columns:-webkit-min-content auto;grid-template-columns:min-content auto;align-items:normal;justify-items:stretch}.handled.svelte-c4j8o8>div.svelte-c4j8o8{border-bottom:1px solid #dfcdc3;padding:4px}.iframe.svelte-c4j8o8.svelte-c4j8o8{border-radius:0.25rem;border-width:1px;--tw-drop-shadow:drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);;background-color:#fff7ed;border-color:var(--color);height:calc(100% - 8px)}
