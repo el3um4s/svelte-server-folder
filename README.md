@@ -1,83 +1,44 @@
-# MEMENTO - Svelte, Typescript & TailwindCSS
+# SVELTE SERVER FOLDER
 
-Template to create a static site with Svelte, Typescript and TailwindCSS
+Serve a local folder of files in your browser for easy testing without having to run a server.
 
-# svelte app
+Serve a local folder of files in your browser for easy testing without having to run a server.
 
-This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/el3um4s/memento-svelte-typescript-tailwind.
+Try now at [el3um4s.github.io/svelte-server-folder/](https://el3um4s.github.io/svelte-server-folder/)!
 
-To create a new project based on this template using [degit](https://github.com/Rich-Harris/degit):
+**This project is my version of [AshleyScirra/servefolder.dev](https://github.com/AshleyScirra/servefolder.dev)**
 
-```bash
-npx degit el3um4s/memento-svelte-typescript-tailwind svelte-app
-cd svelte-app
-```
+I rewrote some of the code in TypeScript and Svelte. I also added the ability to see folders in an iframe. But the idea and the main part of the code is from [AshleyScirra](https://twitter.com/ashleygullen).
 
-_Note that you will need to have [Node.js](https://nodejs.org) installed._
+The following info is from the original project.
 
-## Get started
+## What is this?
 
-Install the dependencies...
+The page at _servefolder.dev_ lets you host a local folder with web development files, such as HTML, JavaScript and CSS, directly in your browser. It works using Service Workers: everything is served from your local system only, nothing is uploaded to a server, and your files are not shared with anybody else.
 
-```bash
-cd svelte-app
-npm install
-```
+## Why is it useful?
 
-...then start [Rollup](https://rollupjs.org):
+Web development files must be served via the HTTP protocol for most modern web platform features to work. Features like fetch and JavaScript Modules don't work when loaded from disk (on the _file:_ protocol). In some enviroments running a HTTP server may be difficult or inconvenient, for example if you're on a system with limited permissions. Alternatively it's another quick way to quickly test some web development files.
 
-```bash
-npm run dev
-```
+## How does it work?
 
-Navigate to [localhost:8080](http://localhost:8080). You should see your app running. Edit a component file in `src`, save it, and reload the page to see your changes.
+Click the big button at the top of the page and choose a folder. Once chosen and any permission prompt approved, a link will appear. Click the link and it will open a new tab and load index.html if a file with that name exists, otherwise it will show the contents of the folder for browsing. This is particularly useful with HTML files, which are also able to load all sub-resources like they can on a normal web server, but this does not actually involve a HTTP server (it works using Service Workers). Note the provided link will only work so long as the page remains open &mdash; as soon as you close the page the link will stop working.
 
-By default, the server will only respond to requests from localhost. To allow connections from other computers, edit the `sirv` commands in package.json to include the option `--host 0.0.0.0`.
+You can also open the page in multiple tabs and host different folders simultaneously. Additional tabs will host at a different URL for accessing different folders. The page also works offline and is installable in supported browsers.
 
-If you're using [Visual Studio Code](https://code.visualstudio.com/) we recommend installing the official extension [Svelte for VS Code](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode). If you are using other editors you may need to install a plugin in order to get syntax highlighting and intellisense.
+## Limitations
 
-## Building and running in production mode
+A couple of known limitations are:
 
-To create an optimised version of the app:
+- The files are served from a subfolder. Serving from the origin root is not supported as it complicates loading this page and supporting multiple hosts.
+- The hosted files cannot register their own service worker. This is because the browser enforces that the SW script is loaded from the network, where it will return 404.
 
-```bash
-npm run build
-```
+However since the vast majority of web APIs will work, this should support most client-side web content, such as HTML5 games, static websites, and so on.
 
-You can run the newly built app with `npm run start`. This uses [sirv](https://github.com/lukeed/sirv), which is included in your package.json's `dependencies` so that the app will work when you deploy to platforms like [Heroku](https://heroku.com).
+## Is my data kept private?
 
-## Single-page app mode
+Yes. Your chosen files will not leave your computer. The files will not be accessible by anyone else, the provided link only works for you, and nothing is transmitted over a network while loading it.
 
-By default, sirv will only respond to requests that match files in `public`. This is to maximise compatibility with static fileservers, allowing you to deploy your app anywhere.
+## Who made this?
 
-If you're building a single-page app (SPA) with multiple routes, sirv needs to be able to respond to requests for _any_ path. You can make it so by editing the `"start"` command in package.json:
-
-```js
-"start": "sirv public --single"
-```
-
-## Deploying to the web
-
-### With [GitHub Pages](https://pages.github.com/)
-
-Edit the `gh-pages.js` file with your info. Then, from within your project folder:
-
-```bash
-npm run build
-npm run deploy
-```
-
-### With [Vercel](https://vercel.com)
-
-Install `vercel` if you haven't already:
-
-```bash
-npm install -g vercel
-```
-
-Then, from within your project folder:
-
-```bash
-cd public
-vercel deploy --name my-project
-```
+Hi, I'm [@AshleyGullen](https://twitter.com/ashleygullen), founder of Scirra and lead developer on [Construct](https://www.construct.net/).
