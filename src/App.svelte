@@ -53,9 +53,7 @@
     showIframe = !showIframe;
   }
 
-  $: labelShowIframe = labelShowIframe = showIframe
-    ? "Close iframe"
-    : "Open in iframe";
+  $: labelShowIframe = showIframe ? "Close iframe" : "Open in iframe";
   $: gridTemplateColumns = showIframe ? "448px calc(100vw - 480px)" : "auto";
 </script>
 

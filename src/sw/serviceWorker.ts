@@ -1,4 +1,4 @@
-export const registerSW = async () => {
+const registerSW = async () => {
   console.log("Registering service worker...");
 
   try {
@@ -11,7 +11,7 @@ export const registerSW = async () => {
   }
 };
 
-export const waitForSWReady = async () => {
+const waitForSWReady = async () => {
   // If there is no controller service worker, wait for up to 4 seconds for the Service Worker to complete initialisation.
   if (navigator.serviceWorker && !navigator.serviceWorker.controller) {
     // Create a promise that resolves when the "controllerchange" event fires.

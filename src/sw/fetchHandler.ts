@@ -16,8 +16,7 @@ export const handleFetch = async (
     if (q !== -1) relativeUrl = relativeUrl.substr(0, q);
 
     // Look up through any subfolders in path.
-    // Note this uses File System Access API methods, either the real kind or a mini
-    // polyfill when using webkitdirectory fallback.
+    // Note this uses File System Access API methods
     const subfolderArr = relativeUrl.split("/");
     let curFolderHandle = folderHandle;
 
